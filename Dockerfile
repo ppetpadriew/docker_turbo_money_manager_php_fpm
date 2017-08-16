@@ -7,12 +7,16 @@ ENV TZ=Asia/Bangkok
 RUN \
     # ENV variables
     PECL_EXTENSIONS="xdebug-2.5.5"; \
-    PHP_EXTENSIONS="mysqli opcache pdo pdo_mysql"; \
+    PHP_EXTENSIONS="mysqli opcache pdo zip pdo_mysql"; \
 
     # update package list
       apt-get update -qqy \
     # install
     && apt-get -qqy --fix-missing --no-install-recommends install \
+
+    zlibc \
+    zlib1g \
+    zlib1g-dev \
 
     # php + pecl extensions
     && docker-php-source extract \
