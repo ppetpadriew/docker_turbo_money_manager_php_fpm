@@ -14,6 +14,12 @@ RUN \
     # install
     && apt-get -qqy --fix-missing --no-install-recommends install \
 
+    git \
+
+    nodejs \
+
+    npm \
+
     zlibc \
     zlib1g \
     zlib1g-dev \
