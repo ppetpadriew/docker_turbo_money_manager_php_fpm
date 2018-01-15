@@ -8,7 +8,7 @@ RUN \
     # ENV variables
     PECL_EXTENSIONS="xdebug-2.5.5"; \
     PHP_EXTENSIONS="mysqli opcache zip pdo_mysql intl"; \
-    DEV_DEPS="libicu-dev g++"; \
+    DEV_DEPS="g++"; \
     # update package list
       apt-get update -qqy \
     # install
@@ -16,6 +16,7 @@ RUN \
     git \
     nodejs \
     npm \
+    libicu-dev \
     zlibc \
     zlib1g \
     zlib1g-dev \
@@ -41,7 +42,3 @@ RUN \
       && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /usr/share/man/*
 
 WORKDIR /var/www/project
-
-# Prevent container from immediately exit
-CMD tail -f /dev/null
-
