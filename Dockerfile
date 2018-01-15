@@ -7,7 +7,8 @@ ENV TZ=Asia/Bangkok
 RUN \
     # ENV variables
     PECL_EXTENSIONS="xdebug-2.5.5"; \
-    PHP_EXTENSIONS="mysqli opcache pdo zip pdo_mysql intl"; \
+    PHP_EXTENSIONS="mysqli opcache zip pdo_mysql intl"; \
+    DEV_DEPS="libicu-dev g++"; \
     # update package list
       apt-get update -qqy \
     # install
@@ -18,6 +19,8 @@ RUN \
     zlibc \
     zlib1g \
     zlib1g-dev \
+    # install dev tools required by some php extensions
+    $DEV_DEPS \
     # php + pecl extensions
     && docker-php-source extract \
       && pecl channel-update pecl.php.net \
@@ -41,3 +44,4 @@ WORKDIR /var/www/project
 
 # Prevent container from immediately exit
 CMD tail -f /dev/null
+
