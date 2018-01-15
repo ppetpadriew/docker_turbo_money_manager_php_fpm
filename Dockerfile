@@ -8,7 +8,8 @@ RUN \
     # ENV variables
     PECL_EXTENSIONS="xdebug-2.5.5"; \
     PHP_EXTENSIONS="mysqli opcache zip pdo_mysql intl"; \
-    DEV_DEPS="g++"; \
+    DEV_DEPS="libicu-dev zlibc zlib1g zlib1g-dev"; \
+    TMP_DEV_DEPS="g++"; \
     # update package list
       apt-get update -qqy \
     # install
@@ -16,12 +17,10 @@ RUN \
     git \
     nodejs \
     npm \
-    libicu-dev \
-    zlibc \
-    zlib1g \
-    zlib1g-dev \
-    # install dev tools required by some php extensions
+    # dev dependencies which still persist after the build process
     $DEV_DEPS \
+    # temp dev dependencies which will be deleted at the end of the build process
+    $TMP_DEV_DEPS \
     # php + pecl extensions
     && docker-php-source extract \
       && pecl channel-update pecl.php.net \
@@ -35,7 +34,7 @@ RUN \
     && ln -sf /dev/stderr /var/log/php7.1-fpm.log \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     # cleanup
-    && apt-get purge -y --auto-remove $DEV_DEPS \
+    && apt-get purge -y --auto-remove $TMP_DEV_DEPS \
       && apt-get clean \
       && apt-get autoclean \
       && apt-get autoremove \
