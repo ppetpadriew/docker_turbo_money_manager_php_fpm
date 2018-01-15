@@ -7,7 +7,7 @@ ENV TZ=Asia/Bangkok
 RUN \
     # ENV variables
     PECL_EXTENSIONS="xdebug-2.5.5"; \
-    PHP_EXTENSIONS="mysqli opcache pdo zip pdo_mysql"; \
+    PHP_EXTENSIONS="mysqli opcache pdo zip pdo_mysql intl"; \
 
     # update package list
       apt-get update -qqy \
@@ -47,3 +47,6 @@ RUN \
       && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* /usr/share/man/*
 
 WORKDIR /var/www/project
+
+# Prevent container from immediately exit
+CMD tail -f /dev/null
