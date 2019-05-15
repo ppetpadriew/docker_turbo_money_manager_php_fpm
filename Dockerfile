@@ -7,16 +7,16 @@ ENV TZ=Asia/Bangkok
 RUN \
     # ENV variables
     PECL_EXTENSIONS="xdebug-2.5.5"; \
-    PHP_EXTENSIONS="mysqli opcache zip pdo_mysql intl"; \
+    PHP_EXTENSIONS="mysqli opcache zip pdo_mysql intl gd"; \
     DEV_DEPS="libicu-dev zlibc zlib1g zlib1g-dev"; \
     TMP_DEV_DEPS="g++"; \
     # update package list
       apt-get update -qqy \
     # install
-    && apt-get -qqy --fix-missing --no-install-recommends install \
+    && apt-get -qqy install \
     git \
     nodejs \
-    npm \
+    libpng-dev \
     # dev dependencies which still persist after the build process
     $DEV_DEPS \
     # temp dev dependencies which will be deleted at the end of the build process
