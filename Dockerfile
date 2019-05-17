@@ -17,6 +17,8 @@ RUN \
     git \
     nodejs \
     libpng-dev \
+    libjpeg-dev \
+    libjpeg62-turbo-dev \
     # dev dependencies which still persist after the build process
     $DEV_DEPS \
     # temp dev dependencies which will be deleted at the end of the build process
@@ -25,6 +27,9 @@ RUN \
     && docker-php-source extract \
       && pecl channel-update pecl.php.net \
       && pecl install $PECL_EXTENSIONS \
+      && docker-php-ext-configure gd \
+            --with-png-dir=/usr/include \
+            --with-jpeg-dir=/usr/include \
       && docker-php-ext-install $PHP_EXTENSIONS \
       && docker-php-ext-enable `echo $PECL_EXTENSIONS | sed -e "s/[^a-z ]//g"` \
       && docker-php-source delete \
